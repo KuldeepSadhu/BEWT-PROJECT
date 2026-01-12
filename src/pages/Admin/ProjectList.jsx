@@ -9,24 +9,24 @@ const ProjectList = () => {
 
   return (
     <div className="p-6">
-      <h2 className="text-2xl font-bold mb-6">Manage All Projects</h2>
-      <div className="bg-white rounded shadow overflow-hidden border">
+      <h2 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white">Manage All Projects</h2>
+      <div className="bg-white dark:bg-gray-800 rounded shadow overflow-hidden border dark:border-gray-700">
         <table className="w-full text-left">
-          <thead className="bg-gray-100">
+          <thead className="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">
             <tr>
-              <th className="p-3 border-b">Project Name</th>
-              <th className="p-3 border-b">Student</th>
-              <th className="p-3 border-b">Department</th>
-              <th className="p-3 border-b">Status</th>
+              <th className="p-3 border-b dark:border-gray-600">Project Name</th>
+              <th className="p-3 border-b dark:border-gray-600">Student</th>
+              <th className="p-3 border-b dark:border-gray-600">Department</th>
+              <th className="p-3 border-b dark:border-gray-600">Status</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="text-gray-700 dark:text-gray-300">
             {projects.map((p) => (
-              <tr key={p.id} className="hover:bg-gray-50">
-                <td className="p-3 border-b">{p.name}</td>
-                <td className="p-3 border-b">{p.student}</td>
-                <td className="p-3 border-b">{p.department}</td>
-                <td className="p-3 border-b font-semibold">{p.status}</td>
+              <tr key={p.id} className="hover:bg-gray-50 dark:hover:bg-gray-700 border-b dark:border-gray-700 last:border-none">
+                <td className="p-3">{p.name}</td>
+                <td className="p-3">{p.student}</td>
+                <td className="p-3">{p.department}</td>
+                <td className="p-3 font-semibold">{p.status}</td>
               </tr>
             ))}
           </tbody>

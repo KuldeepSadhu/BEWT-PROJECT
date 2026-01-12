@@ -52,6 +52,7 @@ import ProgressReport from "./pages/Student/Reports/ProgressReport";
 import Marks from "./pages/Student/Reports/Marks";
 import DownloadSummary from "./pages/Student/Reports/DownloadSummary";
 import DownloadCertificates from "./pages/Student/Reports/DownloadCertificates";
+import NotFound from "./pages/NotFound";
 
 // Utils
 import { getUserRole } from "./utils/auth";
@@ -183,7 +184,7 @@ const App = () => {
       </Route>
 
       {/* Fallback - redirect to login */}
-      <Route path="*" element={<Navigate to="/login" replace />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };
