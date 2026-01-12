@@ -1,39 +1,50 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { setUserRole } from "../utils/auth";
 
 const Login = () => {
   const navigate = useNavigate();
 
   const handleLogin = (role) => {
-    localStorage.setItem("role", role);
-    if (role === "admin") navigate("/admin/dashboard");
-    else if (role === "faculty") navigate("/faculty/dashboard");
-    else if (role === "student") navigate("/student/dashboard");
+    // Use utility function to set role (with validation)
+    if (setUserRole(role)) {
+      navigate(`/${role}/dashboard`);
+    } else {
+      // This shouldn't happen in normal flow, but handle it gracefully
+      console.error("Invalid role attempted:", role);
+    }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-200">
-      <div className="bg-white p-8 rounded shadow-lg text-center">
-        <h1 className="text-2xl font-bold mb-6">Student Project Management System</h1>
-        <p className="mb-4 text-gray-600 border border-yellow-400 p-2 bg-yellow-50">
-          Dev Mode: Click to login as a role
-        </p>
-        <div className="space-y-4 flex flex-col">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 transition-colors">
+      <div className="bg-gray-800 p-8 rounded-lg shadow-xl text-center w-full max-w-md">
+        <h1 className="text-3xl font-bold mb-2 text-white">
+          Student Project Management System
+        </h1>
+        <p className="text-gray-400 mb-6">SPMS Portal</p>
+        
+        <div className="mb-6 p-4 border border-yellow-600 rounded-lg bg-yellow-900/20">
+          <p className="text-sm text-yellow-200 font-medium">
+            🔧 Development Mode: Click to login as a role
+          </p>
+        </div>
+
+        <div className="space-y-3">
           <button
             onClick={() => handleLogin("admin")}
-            className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
+            className="w-full bg-indigo-700 hover:bg-indigo-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors shadow-md hover:shadow-lg"
           >
             Login as Admin
           </button>
           <button
             onClick={() => handleLogin("faculty")}
-            className="bg-green-600 text-white p-2 rounded hover:bg-green-700"
+            className="w-full bg-green-700 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors shadow-md hover:shadow-lg"
           >
             Login as Faculty
           </button>
           <button
             onClick={() => handleLogin("student")}
-            className="bg-indigo-600 text-white p-2 rounded hover:bg-indigo-700"
+            className="w-full bg-blue-700 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors shadow-md hover:shadow-lg"
           >
             Login as Student
           </button>

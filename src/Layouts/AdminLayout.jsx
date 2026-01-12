@@ -1,22 +1,24 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import Navbar from "../components/Navbar";
+import AdminNavbar from "../Components/Header/AdminNavbar";
+import Footer from "../Components/Footer/Footer";
 
 const AdminLayout = () => {
-  const adminLinks = [
-    { label: "Dashboard", path: "/admin/dashboard" },
-    { label: "Manage Projects", path: "/admin/projects" },
-  ];
-
   return (
-    <div>
-      <Navbar role="Admin" links={adminLinks} />
-      <div className="container mx-auto">
-        <Outlet />
+    <div className="flex h-screen bg-gray-50 dark:bg-gray-900 overflow-hidden">
+      {/* Sidebar */}
+      <AdminNavbar />
+      
+      {/* Main Content Area */}
+      <div className="flex-1 flex flex-col overflow-hidden">
+        {/* Page Content */}
+        <main className="flex-1 overflow-y-auto p-6">
+          <Outlet />
+        </main>
+        
+        {/* Footer */}
+        <Footer />
       </div>
-      <footer className="mt-8 p-4 bg-gray-100 text-center text-sm border-t">
-        © 2026 Admin Portal - SPMS
-      </footer>
     </div>
   );
 };

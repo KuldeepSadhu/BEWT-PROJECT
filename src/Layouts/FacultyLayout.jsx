@@ -1,22 +1,24 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import Navbar from "../components/Navbar";
+import FacultyNavbar from "../Components/Header/FacultyNavbar";
+import Footer from "../Components/Footer/Footer";
 
 const FacultyLayout = () => {
-  const links = [
-    { label: "Dashboard", path: "/faculty/dashboard" },
-    { label: "Mentored Groups", path: "/faculty/groups" },
-  ];
-
   return (
-    <div>
-      <Navbar role="Faculty" links={links} />
-      <div className="container mx-auto">
-        <Outlet />
+    <div className="flex h-screen bg-gray-50 dark:bg-gray-900 overflow-hidden">
+      {/* Sidebar */}
+      <FacultyNavbar />
+      
+      {/* Main Content Area */}
+      <div className="flex-1 flex flex-col overflow-hidden">
+        {/* Page Content */}
+        <main className="flex-1 overflow-y-auto p-6">
+          <Outlet />
+        </main>
+        
+        {/* Footer */}
+        <Footer />
       </div>
-      <footer className="mt-8 p-4 bg-gray-100 text-center text-sm border-t">
-        © 2026 Faculty Portal - SPMS
-      </footer>
     </div>
   );
 };

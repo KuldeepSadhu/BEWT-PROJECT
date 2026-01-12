@@ -1,22 +1,21 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import Navbar from "../components/Navbar";
+import StudentNavbar from "../Components/Header/StudentNavbar";
+import Footer from "../Components/Footer/Footer";
 
 const StudentLayout = () => {
-  const links = [
-    { label: "Dashboard", path: "/student/dashboard" },
-    { label: "My Project Details", path: "/student/project" },
-  ];
-
   return (
-    <div>
-      <Navbar role="Student" links={links} />
-      <div className="container mx-auto">
+    <div className="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-900">
+      {/* Top Navbar */}
+      <StudentNavbar />
+      
+      {/* Page Content */}
+      <main className="flex-1 container mx-auto px-4 py-6">
         <Outlet />
-      </div>
-      <footer className="mt-8 p-4 bg-gray-100 text-center text-sm border-t">
-        © 2026 Student Portal - SPMS
-      </footer>
+      </main>
+      
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };
