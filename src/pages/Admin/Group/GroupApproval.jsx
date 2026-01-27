@@ -24,7 +24,7 @@ const GroupApproval = () => {
                   <p className="text-sm text-gray-500 dark:text-gray-400">ID: {group.id}</p>
                 </div>
               </div>
-
+              
               <div className="mb-6">
                 <h4 className="font-semibold text-gray-700 dark:text-gray-300 mb-2">Members:</h4>
                 <ul className="list-disc list-inside text-gray-600 dark:text-gray-400">

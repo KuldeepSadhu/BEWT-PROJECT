@@ -1,53 +1,55 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { setUserRole } from "../utils/auth";
 
 const Login = () => {
   const navigate = useNavigate();
 
-  const handleLogin = (role) => {
-    // Use utility function to set role (with validation)
-    if (setUserRole(role)) {
-      navigate(`/${role}/dashboard`);
-    } else {
-      // This shouldn't happen in normal flow, but handle it gracefully
-      console.error("Invalid role attempted:", role);
-    }
+  const handleNavigation = (path) => {
+    navigate(path);
   };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 transition-colors">
-      <div className="bg-gray-800 p-8 rounded-lg shadow-xl text-center w-full max-w-md">
+      <div className="bg-gray-800 p-8 rounded-lg shadow-xl text-center w-full max-w-md border border-gray-700">
         <h1 className="text-3xl font-bold mb-2 text-white">
           Student Project Management System
         </h1>
-        <p className="text-gray-400 mb-6">SPMS Portal</p>
+        <p className="text-gray-400 mb-8">Select your role to continue</p>
         
-        <div className="mb-6 p-4 border border-yellow-600 rounded-lg bg-yellow-900/20">
-          <p className="text-sm text-yellow-200 font-medium">
-            🔧 Development Mode: Click to login as a role
-          </p>
+        <div className="space-y-4">
+          <div className="relative group">
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-blue-500 rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-200"></div>
+            <button
+              onClick={() => handleNavigation("/admin/login")}
+              className="relative w-full bg-indigo-700 hover:bg-indigo-600 text-white font-semibold py-4 px-6 rounded-lg transition-all shadow-md flex items-center justify-center transform group-hover:scale-[1.02]"
+            >
+              <span className="mr-2">👨‍💼</span> Login as Admin
+            </button>
+          </div>
+
+          <div className="relative group">
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-green-500 to-teal-500 rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-200"></div>
+            <button
+              onClick={() => handleNavigation("/faculty/login")}
+              className="relative w-full bg-green-700 hover:bg-green-600 text-white font-semibold py-4 px-6 rounded-lg transition-all shadow-md flex items-center justify-center transform group-hover:scale-[1.02]"
+            >
+              <span className="mr-2">👨‍🏫</span> Login as Faculty
+            </button>
+          </div>
+
+          <div className="relative group">
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-200"></div>
+            <button
+              onClick={() => handleNavigation("/student/login")}
+              className="relative w-full bg-blue-700 hover:bg-blue-600 text-white font-semibold py-4 px-6 rounded-lg transition-all shadow-md flex items-center justify-center transform group-hover:scale-[1.02]"
+            >
+              <span className="mr-2">👨‍🎓</span> Login as Student
+            </button>
+          </div>
         </div>
 
-        <div className="space-y-3">
-          <button
-            onClick={() => handleLogin("admin")}
-            className="w-full bg-indigo-700 hover:bg-indigo-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors shadow-md hover:shadow-lg"
-          >
-            Login as Admin
-          </button>
-          <button
-            onClick={() => handleLogin("faculty")}
-            className="w-full bg-green-700 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors shadow-md hover:shadow-lg"
-          >
-            Login as Faculty
-          </button>
-          <button
-            onClick={() => handleLogin("student")}
-            className="w-full bg-blue-700 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors shadow-md hover:shadow-lg"
-          >
-            Login as Student
-          </button>
+        <div className="mt-8 text-gray-500 text-sm">
+          &copy; 2026 SPMS. All rights reserved.
         </div>
       </div>
     </div>

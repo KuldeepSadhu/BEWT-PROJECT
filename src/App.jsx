@@ -3,6 +3,8 @@ import { Routes, Route, Navigate } from "react-router-dom";
 
 // Auth
 import Login from "./Auth/Login";
+import LoginPage from "./Auth/LoginPage";
+import RegisterPage from "./Auth/RegisterPage";
 
 // Layouts
 import AdminLayout from "./Layouts/AdminLayout";
@@ -88,6 +90,14 @@ const App = () => {
       {/* Public Routes */}
       <Route path="/login" element={<LoginRoute />} />
       <Route path="/" element={<RootRoute />} />
+
+      {/* Authentication Pages */}
+      <Route path="/admin/login" element={<LoginPage role="admin" />} />
+      <Route path="/faculty/login" element={<LoginPage role="faculty" />} />
+      <Route path="/student/login" element={<LoginPage role="student" />} />
+      
+      <Route path="/faculty/register" element={<RegisterPage role="faculty" />} />
+      <Route path="/student/register" element={<RegisterPage role="student" />} />
 
       {/* Admin Protected Routes */}
       <Route element={<ProtectedRoute allowedRole="admin" />}>
