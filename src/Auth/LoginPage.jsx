@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { login } from "../utils/auth";
-import AuthLayout from "./AuthLayout";
+import { login } from "../utils/auth.js";
+import AuthLayout from "./AuthLayout.jsx";
 
 const LoginPage = ({ role }) => {
   const navigate = useNavigate();
@@ -61,7 +61,7 @@ const LoginPage = ({ role }) => {
             <p className="text-sm">{error}</p>
           </div>
         )}
-
+        
         <div>
           <label className="block text-sm font-medium text-gray-400 mb-2">
             Email Address

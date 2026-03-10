@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { register } from "../utils/auth";
-import AuthLayout from "./AuthLayout";
+import { register } from "../utils/auth.js";
+import AuthLayout from "./AuthLayout.jsx";
 
 const RegisterPage = ({ role }) => {
   const navigate = useNavigate();

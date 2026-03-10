@@ -1,6 +1,6 @@
 import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import { isAuthenticated, getUserRole } from "../utils/auth";
+import { isAuthenticated, getUserRole } from "../utils/auth.js";
 
 const ProtectedRoute = ({ allowedRole }) => {
   const isAuth = isAuthenticated();
@@ -21,7 +21,6 @@ const ProtectedRoute = ({ allowedRole }) => {
 };
 
 export default ProtectedRoute;
-
 
 // ## 6. Create `.env` file in `frontend/` root (NEW FILE)
 

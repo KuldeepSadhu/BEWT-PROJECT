@@ -11,13 +11,15 @@ import {
   FiCalendar,
   FiFileText,
   FiBarChart,
+  FiUser,
 } from "react-icons/fi";
-import { logout } from "../../utils/auth";
+import { logout, getCurrentUser } from "../../utils/auth";
 
 const AdminNavbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const currentUser = getCurrentUser();
 
   const handleLogout = () => {
     logout();
@@ -85,6 +87,23 @@ const AdminNavbar = () => {
             <h1 className="text-2xl font-bold">SPMS</h1>
             <p className="text-indigo-300 text-sm mt-1">Admin Portal</p>
           </div>
+
+          {/* Logged-in User Info */}
+          {currentUser && (
+            <div className="px-6 py-4 border-b border-indigo-700 flex items-center gap-3">
+              <div className="w-9 h-9 rounded-full bg-indigo-500 flex items-center justify-center">
+                <FiUser size={18} />
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-white truncate max-w-[130px]">
+                  {currentUser.name}
+                </p>
+                <p className="text-xs text-indigo-300 capitalize">
+                  {currentUser.role}
+                </p>
+              </div>
+            </div>
+          )}
 
           {/* Navigation Menu */}
           <nav className="flex-1 overflow-y-auto p-4">

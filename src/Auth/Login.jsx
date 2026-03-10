@@ -15,10 +15,10 @@ const Login = () => {
           Student Project Management System
         </h1>
         <p className="text-gray-400 mb-8">Select your role to continue</p>
-        
+
         <div className="space-y-4">
           <div className="relative group">
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-blue-500 rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-200"></div>
+            <div className="absolute -inset-0.5 bg-linear-to-r from-indigo-500 to-blue-500 rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-200"></div>
             <button
               onClick={() => handleNavigation("/admin/login")}
               className="relative w-full bg-indigo-700 hover:bg-indigo-600 text-white font-semibold py-4 px-6 rounded-lg transition-all shadow-md flex items-center justify-center transform group-hover:scale-[1.02]"
@@ -28,7 +28,7 @@ const Login = () => {
           </div>
 
           <div className="relative group">
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-green-500 to-teal-500 rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-200"></div>
+            <div className="absolute -inset-0.5 bg-linear-to-r from-green-500 to-teal-500 rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-200"></div>
             <button
               onClick={() => handleNavigation("/faculty/login")}
               className="relative w-full bg-green-700 hover:bg-green-600 text-white font-semibold py-4 px-6 rounded-lg transition-all shadow-md flex items-center justify-center transform group-hover:scale-[1.02]"
@@ -38,7 +38,7 @@ const Login = () => {
           </div>
 
           <div className="relative group">
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-200"></div>
+            <div className="absolute -inset-0.5 bg-linear-to-r from-blue-500 to-cyan-500 rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-200"></div>
             <button
               onClick={() => handleNavigation("/student/login")}
               className="relative w-full bg-blue-700 hover:bg-blue-600 text-white font-semibold py-4 px-6 rounded-lg transition-all shadow-md flex items-center justify-center transform group-hover:scale-[1.02]"
