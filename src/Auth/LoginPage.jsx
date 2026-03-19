@@ -24,7 +24,6 @@ const LoginPage = ({ role }) => {
 
     try {
       const result = await login(formData.email, formData.password, role);
-
       if (result.success) {
         navigate(`/${role}/dashboard`);
       } else {
@@ -53,25 +52,23 @@ const LoginPage = ({ role }) => {
   return (
     <AuthLayout
       title={`${getRoleLabel()} Login`}
-      subtitle={`Welcome back, please login to your ${role} account.`}
+      subtitle={`Welcome back. Login to your ${role} account.`}
     >
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-5">
         {error && (
-          <div className="bg-red-500/10 border border-red-500 text-red-500 px-4 py-3 rounded-lg">
+          <div className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-rose-700">
             <p className="text-sm">{error}</p>
           </div>
         )}
-        
+
         <div>
-          <label className="block text-sm font-medium text-gray-400 mb-2">
-            Email Address
-          </label>
+          <label className="mb-2 block text-sm font-medium text-slate-700">Email Address</label>
           <input
             type="email"
             name="email"
             required
             disabled={loading}
-            className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder-slate-400 outline-none transition focus:border-teal-600 focus:ring-2 focus:ring-teal-100 disabled:cursor-not-allowed disabled:opacity-50"
             placeholder={`Enter your ${role} email`}
             value={formData.email}
             onChange={handleChange}
@@ -79,15 +76,13 @@ const LoginPage = ({ role }) => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-400 mb-2">
-            Password
-          </label>
+          <label className="mb-2 block text-sm font-medium text-slate-700">Password</label>
           <input
             type="password"
             name="password"
             required
             disabled={loading}
-            className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder-slate-400 outline-none transition focus:border-teal-600 focus:ring-2 focus:ring-teal-100 disabled:cursor-not-allowed disabled:opacity-50"
             placeholder="Enter your password"
             value={formData.password}
             onChange={handleChange}
@@ -97,26 +92,20 @@ const LoginPage = ({ role }) => {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full rounded-xl bg-teal-700 px-4 py-3 font-bold text-white transition-colors hover:bg-teal-600 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {loading ? "Logging in..." : "Login"}
         </button>
 
-        <div className="flex items-center justify-between mt-4">
-          <Link
-            to="/login"
-            className="text-sm text-gray-400 hover:text-white transition-colors"
-          >
-            ← Back to Role Selection
+        <div className="mt-4 flex items-center justify-between gap-3">
+          <Link to="/login" className="text-sm text-slate-500 transition-colors hover:text-slate-800">
+            Back to role selection
           </Link>
 
           {role !== "admin" && (
-            <span className="text-sm text-gray-400">
-              Don't have an account?{" "}
-              <Link
-                to={`/${role}/register`}
-                className="text-blue-400 hover:text-blue-300 font-medium"
-              >
+            <span className="text-sm text-slate-500">
+              No account?{" "}
+              <Link to={`/${role}/register`} className="font-medium text-teal-700 hover:text-teal-600">
                 Register
               </Link>
             </span>

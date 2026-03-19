@@ -5,8 +5,11 @@ import "./index.css";
 
 import App from "./App.jsx";
 
-// Set dark mode always
-document.documentElement.classList.add("dark");
+// Keep the app in light mode by default and clear any stale forced dark setting.
+document.documentElement.classList.remove("dark");
+if (localStorage.getItem("theme") === "dark") {
+  localStorage.setItem("theme", "light");
+}
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>

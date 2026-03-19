@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import {
   FiHome,
   FiUsers,
@@ -17,7 +17,7 @@ import { logout } from "../../utils/auth";
 const FacultyNavbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -77,11 +77,11 @@ const FacultyNavbar = () => {
   return (
     <>
       {/* Mobile Header */}
-      <div className="lg:hidden bg-green-700 text-white p-4 flex justify-between items-center shadow-md">
-        <h1 className="text-xl font-bold">SPMS Faculty</h1>
+      <div className="lg:hidden bg-sky-800 text-white p-4 flex justify-between items-center shadow-md">
+        <h1 className="text-lg font-semibold tracking-wide">SPMS Faculty</h1>
         <button
           onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="p-2 hover:bg-green-600 rounded"
+          className="p-2 hover:bg-sky-700 rounded-lg"
         >
           {sidebarOpen ? <FiX size={24} /> : <FiMenu size={24} />}
         </button>
@@ -91,29 +91,31 @@ const FacultyNavbar = () => {
       <aside
         className={`${
           sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
-        } fixed lg:static inset-y-0 left-0 z-50 w-64 bg-green-800 dark:bg-green-900 text-white shadow-lg transition-transform duration-300 ease-in-out`}
+        } fixed lg:static inset-y-0 left-0 z-50 w-72 bg-sky-900 text-white shadow-xl transition-transform duration-300 ease-in-out`}
       >
         <div className="h-full flex flex-col">
           {/* Logo/Brand */}
-          <div className="p-6 border-b border-green-700">
-            <h1 className="text-2xl font-bold">SPMS</h1>
-            <p className="text-green-300 text-sm mt-1">Faculty Portal</p>
+          <div className="p-6 border-b border-sky-800/80">
+            <h1 className="text-2xl font-bold tracking-tight">SPMS</h1>
+            <p className="text-sky-200/80 text-sm mt-1">Faculty Workspace</p>
           </div>
 
           {/* Navigation Menu */}
-          <nav className="flex-1 overflow-y-auto p-4">
+          <nav className="flex-1 overflow-y-auto px-3 py-4">
             <ul className="space-y-2">
               {menuItems.map((item) => {
                 const Icon = item.icon;
                 return (
                   <li key={item.path}>
-                    <Link
+                    <NavLink
                       to={item.path}
-                      className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-                        isActive(item.path)
-                          ? "bg-green-600 text-white shadow-md"
-                          : "text-green-100 hover:bg-green-700"
-                      }`}
+                      className={({ isActive: navIsActive }) =>
+                        `flex items-center gap-3 px-4 py-3 rounded-xl transition-all visited:text-inherit [&_span]:text-current [&_svg]:text-current ${
+                          navIsActive || isActive(item.path)
+                            ? "bg-white !text-sky-950 shadow-md"
+                            : "!text-sky-100 hover:bg-sky-800/70 hover:!text-white"
+                        }`
+                      }
                       onClick={() => {
                         if (window.innerWidth < 1024) {
                           setSidebarOpen(false);
@@ -122,7 +124,7 @@ const FacultyNavbar = () => {
                     >
                       <Icon size={20} />
                       <span className="font-medium">{item.label}</span>
-                    </Link>
+                    </NavLink>
                   </li>
                 );
               })}
@@ -130,10 +132,10 @@ const FacultyNavbar = () => {
           </nav>
 
           {/* Logout */}
-          <div className="p-4 border-t border-green-700">
+          <div className="p-4 border-t border-sky-800/80">
             <button
               onClick={handleLogout}
-              className="w-full flex items-center gap-3 px-4 py-3 rounded-lg bg-red-600 hover:bg-red-700 text-white transition-colors font-medium"
+              className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-900 transition-colors font-semibold"
             >
               <FiLogOut size={20} />
               <span>Logout</span>

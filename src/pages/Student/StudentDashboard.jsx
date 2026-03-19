@@ -3,45 +3,32 @@ import DashboardCard from "../../Components/DashboardCard.jsx";
 import { dummyGroups } from "../../utils/dummyData";
 
 const StudentDashboard = () => {
-  // Mocking logged in student's group
   const myGroup = dummyGroups[0];
 
   return (
-    <div className="p-6">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white">
-        Student Dashboard
-      </h2>
+    <div>
+      <h2 className="page-title">Student Dashboard</h2>
+      <p className="page-subtitle">Stay aligned with project milestones and your team timeline.</p>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-        <DashboardCard
-          title="Project Progress"
-          value={`${myGroup.progress}%`}
-          color="indigo"
-        />
+      <div className="mb-8 mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
+        <DashboardCard title="Project Progress" value={`${myGroup.progress}%`} color="indigo" />
         <DashboardCard title="Upcoming Meetings" value="1" color="emerald" />
         <DashboardCard title="Pending Tasks" value="3" color="amber" />
       </div>
 
-      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-200 dark:border-gray-700">
-        <h3 className="text-xl font-bold mb-4 text-gray-800 dark:text-white">
-          Project: {myGroup.project}
-        </h3>
-        <p className="mb-2 text-gray-700 dark:text-gray-300">
-          <strong className="text-gray-800 dark:text-white">Guide:</strong>{" "}
-          {myGroup.guide}
+      <div className="surface-card p-6">
+        <h3 className="mb-4 text-xl font-bold text-slate-900">Project: {myGroup.project}</h3>
+
+        <p className="mb-2 text-slate-700">
+          <strong className="text-slate-900">Guide:</strong> {myGroup.guide}
         </p>
-        <p className="mb-4 text-gray-700 dark:text-gray-300">
-          <strong className="text-gray-800 dark:text-white">
-            Current Status:
-          </strong>{" "}
-          {myGroup.status}
+        <p className="mb-4 text-slate-700">
+          <strong className="text-slate-900">Current Status:</strong> {myGroup.status}
         </p>
 
-        <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 bg-gray-50 dark:bg-gray-700/50">
-          <h4 className="font-bold mb-2 text-gray-800 dark:text-white">
-            Team Members:
-          </h4>
-          <ul className="list-disc ml-5 text-sm text-gray-700 dark:text-gray-300">
+        <div className="surface-card-soft p-4">
+          <h4 className="mb-2 font-bold text-slate-900">Team Members:</h4>
+          <ul className="list-disc ml-5 text-sm text-slate-700">
             {myGroup.students.map((student, index) => (
               <li key={index}>{student}</li>
             ))}

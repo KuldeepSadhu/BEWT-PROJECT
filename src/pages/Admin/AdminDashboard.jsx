@@ -32,109 +32,75 @@ const AdminDashboard = () => {
   const getStatusStyle = (status) => {
     switch (status) {
       case "Approved":
-        return "bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300";
+        return "bg-emerald-100 text-emerald-800";
       case "Rejected":
-        return "bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300";
+        return "bg-rose-100 text-rose-800";
       default:
-        return "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300";
+        return "bg-amber-100 text-amber-800";
     }
   };
 
   if (loading) {
     return (
-      <div className="p-6 flex items-center justify-center h-64">
-        <p className="text-gray-500 dark:text-gray-400 text-lg animate-pulse">
-          Loading dashboard...
-        </p>
+      <div className="flex h-64 items-center justify-center">
+        <p className="text-lg text-slate-500 animate-pulse">Loading dashboard...</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="p-6">
-        <div className="bg-red-100 dark:bg-red-900/20 border border-red-400 text-red-700 dark:text-red-300 px-4 py-3 rounded-lg">
-          {error}
-        </div>
+      <div className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-rose-700">
+        {error}
       </div>
     );
   }
 
   return (
-    <div className="p-6">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white">
-        Admin Dashboard
-      </h2>
+    <div>
+      <h2 className="page-title">Admin Dashboard</h2>
+      <p className="page-subtitle">
+        Track projects, approvals, and mentoring activity in one place.
+      </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-        <DashboardCard
-          title="Total Projects"
-          value={stats?.totalProjects ?? 0}
-          color="blue"
-        />
+      <div className="mb-8 mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <DashboardCard title="Total Projects" value={stats?.totalProjects ?? 0} color="blue" />
         <DashboardCard
           title="Pending Approvals"
           value={stats?.pendingApprovals ?? 0}
           color="amber"
         />
-        <DashboardCard
-          title="Active Groups"
-          value={stats?.activeGroups ?? 0}
-          color="emerald"
-        />
-        <DashboardCard
-          title="Total Faculty"
-          value={stats?.totalFaculty ?? 0}
-          color="indigo"
-        />
+        <DashboardCard title="Active Groups" value={stats?.activeGroups ?? 0} color="emerald" />
+        <DashboardCard title="Total Faculty" value={stats?.totalFaculty ?? 0} color="indigo" />
       </div>
 
-      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-200 dark:border-gray-700">
-        <h3 className="text-lg font-semibold mb-4 border-b border-gray-200 dark:border-gray-700 pb-2 text-gray-800 dark:text-white">
+      <div className="surface-card p-6">
+        <h3 className="border-b border-slate-200 pb-2 text-lg font-semibold text-slate-900">
           Recent Project Proposals
         </h3>
-        <div className="overflow-x-auto">
+        <div className="mt-4 overflow-x-auto">
           {proposals.length === 0 ? (
-            <p className="text-gray-500 dark:text-gray-400 text-center py-6">
-              No proposals found.
-            </p>
+            <p className="py-8 text-center text-slate-500">No proposals found.</p>
           ) : (
-            <table className="w-full text-left border-collapse">
+            <table className="w-full border-collapse text-left">
               <thead>
-                <tr className="bg-gray-100 dark:bg-gray-700">
-                  <th className="p-3 border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300">
-                    Project Name
-                  </th>
-                  <th className="p-3 border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300">
-                    Department
-                  </th>
-                  <th className="p-3 border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300">
-                    Faculty
-                  </th>
-                  <th className="p-3 border border-gray-200 dark:border-gray-600 text-center text-gray-700 dark:text-gray-300">
-                    Status
-                  </th>
+                <tr className="bg-slate-50">
+                  <th className="border border-slate-200 p-3 text-slate-700">Project Name</th>
+                  <th className="border border-slate-200 p-3 text-slate-700">Department</th>
+                  <th className="border border-slate-200 p-3 text-slate-700">Faculty</th>
+                  <th className="border border-slate-200 p-3 text-center text-slate-700">Status</th>
                 </tr>
               </thead>
               <tbody>
                 {proposals.map((proposal) => (
-                  <tr
-                    key={proposal._id}
-                    className="hover:bg-gray-50 dark:hover:bg-gray-700/50"
-                  >
-                    <td className="p-3 border border-gray-200 dark:border-gray-600 text-gray-800 dark:text-gray-200">
-                      {proposal.title}
+                  <tr key={proposal._id} className="transition-colors hover:bg-slate-50">
+                    <td className="border border-slate-200 p-3 text-slate-800">{proposal.title}</td>
+                    <td className="border border-slate-200 p-3 text-slate-800">{proposal.department}</td>
+                    <td className="border border-slate-200 p-3 text-slate-800">
+                      {proposal.faculty?.name || "-"}
                     </td>
-                    <td className="p-3 border border-gray-200 dark:border-gray-600 text-gray-800 dark:text-gray-200">
-                      {proposal.department}
-                    </td>
-                    <td className="p-3 border border-gray-200 dark:border-gray-600 text-gray-800 dark:text-gray-200">
-                      {proposal.faculty?.name || "—"}
-                    </td>
-                    <td className="p-3 border border-gray-200 dark:border-gray-600 text-center">
-                      <span
-                        className={`px-2 py-1 rounded text-xs font-bold ${getStatusStyle(proposal.status)}`}
-                      >
+                    <td className="border border-slate-200 p-3 text-center">
+                      <span className={`status-chip ${getStatusStyle(proposal.status)}`}>
                         {proposal.status}
                       </span>
                     </td>

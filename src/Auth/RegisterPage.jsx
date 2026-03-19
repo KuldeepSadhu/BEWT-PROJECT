@@ -11,7 +11,7 @@ const RegisterPage = ({ role }) => {
     password: "",
     confirmPassword: "",
     department: "",
-    rollNumber: "", // For student
+    rollNumber: "",
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -25,7 +25,6 @@ const RegisterPage = ({ role }) => {
     e.preventDefault();
     setError("");
 
-    // Validation
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match");
       return;
@@ -49,11 +48,7 @@ const RegisterPage = ({ role }) => {
     setLoading(true);
 
     try {
-      // Prepare data based on role
-      const registrationData = {
-        department: formData.department,
-      };
-
+      const registrationData = { department: formData.department };
       if (role === "student") {
         registrationData.rollNumber = formData.rollNumber;
       }
@@ -96,21 +91,19 @@ const RegisterPage = ({ role }) => {
     >
       <form onSubmit={handleSubmit} className="space-y-5">
         {error && (
-          <div className="bg-red-500/10 border border-red-500 text-red-500 px-4 py-3 rounded-lg">
+          <div className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-rose-700">
             <p className="text-sm">{error}</p>
           </div>
         )}
 
         <div>
-          <label className="block text-sm font-medium text-gray-400 mb-2">
-            Full Name
-          </label>
+          <label className="mb-2 block text-sm font-medium text-slate-700">Full Name</label>
           <input
             type="text"
             name="name"
             required
             disabled={loading}
-            className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:opacity-50"
+            className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder-slate-400 outline-none transition focus:border-teal-600 focus:ring-2 focus:ring-teal-100 disabled:opacity-50"
             placeholder="Enter your full name"
             value={formData.name}
             onChange={handleChange}
@@ -118,15 +111,13 @@ const RegisterPage = ({ role }) => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-400 mb-2">
-            Email Address
-          </label>
+          <label className="mb-2 block text-sm font-medium text-slate-700">Email Address</label>
           <input
             type="email"
             name="email"
             required
             disabled={loading}
-            className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:opacity-50"
+            className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder-slate-400 outline-none transition focus:border-teal-600 focus:ring-2 focus:ring-teal-100 disabled:opacity-50"
             placeholder="Enter your email"
             value={formData.email}
             onChange={handleChange}
@@ -134,16 +125,14 @@ const RegisterPage = ({ role }) => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-400 mb-2">
-            Department
-          </label>
+          <label className="mb-2 block text-sm font-medium text-slate-700">Department</label>
           <input
             type="text"
             name="department"
             required
             disabled={loading}
-            className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:opacity-50"
-            placeholder="e.g., Computer Science, Electrical Engineering"
+            className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder-slate-400 outline-none transition focus:border-teal-600 focus:ring-2 focus:ring-teal-100 disabled:opacity-50"
+            placeholder="e.g. Computer Science"
             value={formData.department}
             onChange={handleChange}
           />
@@ -151,15 +140,13 @@ const RegisterPage = ({ role }) => {
 
         {role === "student" && (
           <div>
-            <label className="block text-sm font-medium text-gray-400 mb-2">
-              Roll Number
-            </label>
+            <label className="mb-2 block text-sm font-medium text-slate-700">Roll Number</label>
             <input
               type="text"
               name="rollNumber"
               required
               disabled={loading}
-              className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:opacity-50"
+              className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder-slate-400 outline-none transition focus:border-teal-600 focus:ring-2 focus:ring-teal-100 disabled:opacity-50"
               placeholder="Enter your roll number"
               value={formData.rollNumber}
               onChange={handleChange}
@@ -168,15 +155,13 @@ const RegisterPage = ({ role }) => {
         )}
 
         <div>
-          <label className="block text-sm font-medium text-gray-400 mb-2">
-            Password
-          </label>
+          <label className="mb-2 block text-sm font-medium text-slate-700">Password</label>
           <input
             type="password"
             name="password"
             required
             disabled={loading}
-            className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:opacity-50"
+            className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder-slate-400 outline-none transition focus:border-teal-600 focus:ring-2 focus:ring-teal-100 disabled:opacity-50"
             placeholder="Create a password"
             value={formData.password}
             onChange={handleChange}
@@ -184,15 +169,13 @@ const RegisterPage = ({ role }) => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-400 mb-2">
-            Confirm Password
-          </label>
+          <label className="mb-2 block text-sm font-medium text-slate-700">Confirm Password</label>
           <input
             type="password"
             name="confirmPassword"
             required
             disabled={loading}
-            className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:opacity-50"
+            className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder-slate-400 outline-none transition focus:border-teal-600 focus:ring-2 focus:ring-teal-100 disabled:opacity-50"
             placeholder="Confirm your password"
             value={formData.confirmPassword}
             onChange={handleChange}
@@ -202,25 +185,19 @@ const RegisterPage = ({ role }) => {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full rounded-xl bg-teal-700 px-4 py-3 font-bold text-white transition-colors hover:bg-teal-600 disabled:cursor-not-allowed disabled:opacity-50"
         >
-          {loading ? "Creating Account..." : "Register"}
+          {loading ? "Creating account..." : "Register"}
         </button>
 
-        <div className="flex items-center justify-between mt-4">
-          <Link
-            to="/login"
-            className="text-sm text-gray-400 hover:text-white transition-colors"
-          >
-            ← Back to Role Selection
+        <div className="mt-4 flex items-center justify-between gap-3">
+          <Link to="/login" className="text-sm text-slate-500 transition-colors hover:text-slate-800">
+            Back to role selection
           </Link>
 
-          <span className="text-sm text-gray-400">
+          <span className="text-sm text-slate-500">
             Already have an account?{" "}
-            <Link
-              to={`/${role}/login`}
-              className="text-blue-400 hover:text-blue-300 font-medium"
-            >
+            <Link to={`/${role}/login`} className="font-medium text-teal-700 hover:text-teal-600">
               Login
             </Link>
           </span>

@@ -2,16 +2,18 @@ import React from "react";
 
 const DashboardCard = ({ title, value, color }) => {
   const bgColors = {
-    blue: "bg-blue-500 dark:bg-blue-600",
-    emerald: "bg-green-500 dark:bg-green-600",
-    indigo: "bg-indigo-500 dark:bg-indigo-600",
-    amber: "bg-yellow-500 dark:bg-yellow-600",
+    blue: "from-sky-600 to-sky-700",
+    emerald: "from-teal-600 to-teal-700",
+    indigo: "from-cyan-700 to-blue-700",
+    amber: "from-amber-500 to-amber-600",
   };
 
   return (
-    <div className={`${bgColors[color] || "bg-gray-500 dark:bg-gray-600"} p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow text-white`}>
-      <h3 className="text-lg font-semibold mb-2 opacity-90">{title}</h3>
-      <p className="text-2xl font-bold">{value}</p>
+    <div
+      className={`rounded-2xl bg-gradient-to-br ${bgColors[color] || "from-slate-500 to-slate-600"} p-6 text-white shadow-lg transition-transform duration-200 hover:-translate-y-1`}
+    >
+      <h3 className="mb-1 text-sm font-semibold uppercase tracking-wider text-white/85">{title}</h3>
+      <p className="text-3xl font-bold">{value}</p>
     </div>
   );
 };

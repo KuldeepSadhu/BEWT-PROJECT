@@ -4,53 +4,59 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-gray-800 dark:bg-gray-900 text-gray-300 dark:text-gray-400 mt-auto border-t border-gray-700 dark:border-gray-800">
+    <footer className="mt-auto border-t border-slate-200 bg-white/70 backdrop-blur">
       <div className="container mx-auto px-4 py-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* About Section */}
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           <div>
-            <h3 className="text-white dark:text-gray-100 font-semibold mb-3">About SPMS</h3>
-            <p className="text-sm text-gray-400 dark:text-gray-500">
-              Student Project Management System - A comprehensive platform for managing 
+            <h3 className="mb-3 font-semibold text-slate-900">About SPMS</h3>
+            <p className="text-sm text-slate-600">
+              Student Project Management System, a unified platform for managing
               academic projects, groups, and evaluations.
             </p>
           </div>
 
-          {/* Quick Links */}
           <div>
-            <h3 className="text-white dark:text-gray-100 font-semibold mb-3">Quick Links</h3>
+            <h3 className="mb-3 font-semibold text-slate-900">Quick Links</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="#" className="hover:text-white dark:hover:text-gray-200 transition-colors">
+                <a
+                  href="/admin/dashboard"
+                  className="text-slate-600 transition-colors hover:text-slate-900"
+                >
                   Documentation
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-white dark:hover:text-gray-200 transition-colors">
+                <a
+                  href="/faculty/dashboard"
+                  className="text-slate-600 transition-colors hover:text-slate-900"
+                >
                   Support
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-white dark:hover:text-gray-200 transition-colors">
+                <a
+                  href="/student/dashboard"
+                  className="text-slate-600 transition-colors hover:text-slate-900"
+                >
                   Privacy Policy
                 </a>
               </li>
             </ul>
           </div>
 
-          {/* Contact */}
           <div>
-            <h3 className="text-white dark:text-gray-100 font-semibold mb-3">Contact</h3>
-            <p className="text-sm text-gray-400 dark:text-gray-500">
-              Email: support@spms.edu<br />
+            <h3 className="mb-3 font-semibold text-slate-900">Contact</h3>
+            <p className="text-sm text-slate-600">
+              Email: support@spms.edu
+              <br />
               Phone: +1 (555) 123-4567
             </p>
           </div>
         </div>
 
-        {/* Copyright */}
-        <div className="border-t border-gray-700 dark:border-gray-800 mt-6 pt-6 text-center text-sm text-gray-400 dark:text-gray-500">
-          <p>© {currentYear} Student Project Management System. All rights reserved.</p>
+        <div className="mt-6 border-t border-slate-200 pt-6 text-center text-sm text-slate-500">
+          <p>&copy; {currentYear} Student Project Management System. All rights reserved.</p>
         </div>
       </div>
     </footer>
