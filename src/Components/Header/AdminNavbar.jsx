@@ -63,11 +63,11 @@ const AdminNavbar = () => {
   return (
     <>
       {/* Mobile Header */}
-      <div className="lg:hidden bg-teal-800 text-white p-4 flex justify-between items-center shadow-md">
+      <div className="lg:hidden bg-slate-900 text-slate-100 p-4 flex justify-between items-center shadow-md">
         <h1 className="text-lg font-semibold tracking-wide">SPMS Admin</h1>
         <button
           onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="p-2 hover:bg-teal-700 rounded-lg"
+          className="p-2 hover:bg-slate-800 rounded-lg"
         >
           {sidebarOpen ? <FiX size={24} /> : <FiMenu size={24} />}
         </button>
@@ -77,28 +77,28 @@ const AdminNavbar = () => {
       <aside
         className={`${
           sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
-        } fixed lg:static inset-y-0 left-0 z-50 w-72 bg-teal-900 text-white shadow-xl transition-transform duration-300 ease-in-out`}
+        } fixed lg:static inset-y-0 left-0 z-50 w-72 bg-slate-950 text-slate-100 shadow-xl transition-transform duration-300 ease-in-out`}
       >
         <div className="h-full flex flex-col">
           {/* Logo/Brand */}
-          <div className="p-6 border-b border-teal-800/80">
+          <div className="p-6 border-b border-slate-800/80">
             <h1 className="text-2xl font-bold tracking-tight">SPMS</h1>
-            <p className="text-teal-200/80 text-sm mt-1">
+            <p className="text-slate-400 text-sm mt-1">
               Administrator Console
             </p>
           </div>
 
           {/* Logged-in User Info */}
           {currentUser && (
-            <div className="px-6 py-4 border-b border-teal-800/80 flex items-center gap-3">
-              <div className="w-9 h-9 rounded-full bg-teal-700 flex items-center justify-center">
+            <div className="px-6 py-4 border-b border-slate-800/80 flex items-center gap-3">
+              <div className="w-9 h-9 rounded-full bg-slate-700 flex items-center justify-center">
                 <FiUser size={18} />
               </div>
               <div>
                 <p className="text-sm font-semibold text-white truncate max-w-[130px]">
                   {currentUser.name}
                 </p>
-                <p className="text-xs text-teal-200/80 capitalize">
+                <p className="text-xs text-slate-400 capitalize">
                   {currentUser.role}
                 </p>
               </div>
@@ -107,8 +107,7 @@ const AdminNavbar = () => {
 
           {/* Navigation Menu */}
           <nav className="flex-1 overflow-y-auto px-3 py-4">
-            <ul className="sp
-            ace-y-2">
+            <ul className="space-y-2">
               {menuItems.map((item) => {
                 const Icon = item.icon;
                 return (
@@ -118,8 +117,8 @@ const AdminNavbar = () => {
                       className={({ isActive: navIsActive }) =>
                         `flex items-center gap-3 px-4 py-3 rounded-xl transition-all visited:text-inherit [&_span]:text-current [&_svg]:text-current ${
                           navIsActive || isActive(item.path)
-                            ? "bg-white !text-slate-950 shadow-md"
-                            : "!text-teal-100 hover:bg-teal-800/70 hover:!text-white"
+                            ? "bg-slate-700/90 !text-white shadow-md"
+                            : "!text-slate-300 hover:bg-slate-800/80 hover:!text-slate-100"
                         }`
                       }
                       onClick={() => {
@@ -139,10 +138,10 @@ const AdminNavbar = () => {
           </nav>
 
           {/* Logout */}
-          <div className="p-4 border-t border-teal-800/80">
+          <div className="p-4 border-t border-slate-800/80">
             <button
               onClick={handleLogout}
-              className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-900 transition-colors font-semibold"
+              className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-slate-700 hover:bg-slate-600 text-slate-100 transition-colors font-semibold"
             >
               <FiLogOut size={20} />
               <span>Logout</span>

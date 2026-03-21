@@ -1,9 +1,22 @@
 import React from "react";
-import { dummyStudents } from "../../utils/dummyData";
 import { FiUser, FiMail, FiPhone, FiBook, FiAward, FiEdit2 } from "react-icons/fi";
+import { useStudents } from "../../hooks/useSpmsData";
 
 const Profile = () => {
-  const student = dummyStudents[0]; // Mock logged in student
+  const { data: students, isLoading, error } = useStudents();
+  const student = students[0];
+
+  if (isLoading) {
+    return <div className="p-6">Loading profile...</div>;
+  }
+
+  if (error) {
+    return <div className="p-6 text-red-600">Failed to load profile.</div>;
+  }
+
+  if (!student) {
+    return <div className="p-6">No student profile found.</div>;
+  }
 
   return (
     <div className="p-6">

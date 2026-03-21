@@ -1,8 +1,10 @@
 import React from "react";
-import { dummyProjectTypes } from "../../../utils/dummyData";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
+import { useProjectTypes } from "../../../hooks/useSpmsData";
 
 const ProjectTypes = () => {
+  const { data: projectTypes, isLoading, error } = useProjectTypes();
+
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
@@ -13,7 +15,17 @@ const ProjectTypes = () => {
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {dummyProjectTypes.map((type) => (
+        {isLoading && (
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-200 dark:border-gray-700">
+            Loading project types...
+          </div>
+        )}
+        {!isLoading && error && (
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-red-200 text-red-600 dark:border-red-700">
+            Failed to load project types.
+          </div>
+        )}
+        {!isLoading && !error && projectTypes.map((type) => (
           <div key={type.id} className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow">
             <div className="flex justify-between items-start mb-4">
               <h3 className="text-xl font-bold text-gray-800 dark:text-white">{type.type}</h3>
@@ -43,6 +55,11 @@ const ProjectTypes = () => {
             </div>
           </div>
         ))}
+        {!isLoading && !error && projectTypes.length === 0 && (
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-200 dark:border-gray-700">
+            No project types found.
+          </div>
+        )}
       </div>
     </div>
   );

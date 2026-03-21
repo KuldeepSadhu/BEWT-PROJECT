@@ -1,13 +1,17 @@
 import React from "react";
-import { dummyGroups } from "../../../utils/dummyData";
+import { useGroups } from "../../../hooks/useSpmsData";
 
 const ProjectProgress = () => {
+  const { data: groups, isLoading, error } = useGroups();
+
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white">Project Progress</h2>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {dummyGroups.map((group) => (
+        {isLoading && <div>Loading progress data...</div>}
+        {!isLoading && error && <div className="text-red-600">Failed to load progress data.</div>}
+        {!isLoading && !error && groups.map((group) => (
           <div key={group.id} className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-200 dark:border-gray-700">
             <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-1">{group.project}</h3>
             <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">{group.guide}</p>
@@ -53,6 +57,7 @@ const ProjectProgress = () => {
             </button>
           </div>
         ))}
+        {!isLoading && !error && groups.length === 0 && <div>No project progress records found.</div>}
       </div>
     </div>
   );

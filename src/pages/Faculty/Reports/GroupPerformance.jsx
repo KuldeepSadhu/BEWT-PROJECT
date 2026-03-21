@@ -1,8 +1,10 @@
 import React from "react";
-import { dummyGroups } from "../../../utils/dummyData";
 import { FiTrendingUp, FiBarChart2 } from "react-icons/fi";
+import { useGroups } from "../../../hooks/useSpmsData";
 
 const GroupPerformance = () => {
+  const { data: groups, isLoading, error } = useGroups();
+
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white">Group Performance</h2>
@@ -38,7 +40,17 @@ const GroupPerformance = () => {
             </tr>
           </thead>
           <tbody className="text-gray-700 dark:text-gray-300">
-            {dummyGroups.map((group) => (
+            {isLoading && (
+              <tr>
+                <td colSpan="5" className="p-4 text-center">Loading groups...</td>
+              </tr>
+            )}
+            {!isLoading && error && (
+              <tr>
+                <td colSpan="5" className="p-4 text-center text-red-600">Failed to load groups.</td>
+              </tr>
+            )}
+            {!isLoading && !error && groups.map((group) => (
               <tr key={group.id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50 border-b dark:border-gray-700 last:border-none">
                 <td className="p-4 font-mono text-sm">{group.id}</td>
                 <td className="p-4 font-semibold">{group.project}</td>
@@ -60,6 +72,11 @@ const GroupPerformance = () => {
                 </td>
               </tr>
             ))}
+            {!isLoading && !error && groups.length === 0 && (
+              <tr>
+                <td colSpan="5" className="p-4 text-center">No groups found.</td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

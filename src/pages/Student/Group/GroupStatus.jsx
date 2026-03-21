@@ -1,17 +1,30 @@
 import React from "react";
-import { dummyGroups } from "../../../utils/dummyData";
 import { FiCheckCircle, FiCircle } from "react-icons/fi";
+import { useGroups } from "../../../hooks/useSpmsData";
 
 const GroupStatus = () => {
-  const myGroup = dummyGroups[0];
+  const { data: groups, isLoading, error } = useGroups();
+  const myGroup = groups[0];
   const steps = [
     { name: "Group Formation", status: "completed" },
     { name: "Guide Allocation", status: "completed" },
-    { name: "Topic Approval", status: "completed" },
-    { name: "Synopsis Submission", status: "current" },
-    { name: "Mid-Term Review", status: "pending" },
-    { name: "Final Submission", status: "pending" },
+    { name: "Topic Approval", status: myGroup?.status === "Approved" ? "completed" : "current" },
+    { name: "Synopsis Submission", status: myGroup?.progress >= 30 ? "completed" : "current" },
+    { name: "Mid-Term Review", status: myGroup?.progress >= 60 ? "completed" : "pending" },
+    { name: "Final Submission", status: myGroup?.progress >= 90 ? "completed" : "pending" },
   ];
+
+  if (isLoading) {
+    return <div className="p-6">Loading group status...</div>;
+  }
+
+  if (error) {
+    return <div className="p-6 text-red-600">Failed to load group status.</div>;
+  }
+
+  if (!myGroup) {
+    return <div className="p-6">No group status available.</div>;
+  }
 
   return (
     <div className="p-6">

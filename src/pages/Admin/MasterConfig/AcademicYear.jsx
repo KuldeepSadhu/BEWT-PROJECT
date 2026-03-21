@@ -1,7 +1,9 @@
 import React from "react";
-import { dummyAcademicYears } from "../../../utils/dummyData";
+import { useAcademicYears } from "../../../hooks/useSpmsData";
 
 const AcademicYear = () => {
+  const { data: academicYears, isLoading, error } = useAcademicYears();
+
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
@@ -23,7 +25,17 @@ const AcademicYear = () => {
             </tr>
           </thead>
           <tbody className="text-gray-700 dark:text-gray-300">
-            {dummyAcademicYears.map((ay) => (
+            {isLoading && (
+              <tr>
+                <td colSpan="5" className="p-4 text-center">Loading academic years...</td>
+              </tr>
+            )}
+            {!isLoading && error && (
+              <tr>
+                <td colSpan="5" className="p-4 text-center text-red-600">Failed to load academic years.</td>
+              </tr>
+            )}
+            {!isLoading && !error && academicYears.map((ay) => (
               <tr key={ay.id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50 border-b dark:border-gray-700 last:border-none">
                 <td className="p-4 font-bold">{ay.year}</td>
                 <td className="p-4">{ay.startDate}</td>
@@ -46,6 +58,11 @@ const AcademicYear = () => {
                 </td>
               </tr>
             ))}
+            {!isLoading && !error && academicYears.length === 0 && (
+              <tr>
+                <td colSpan="5" className="p-4 text-center">No academic years found.</td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

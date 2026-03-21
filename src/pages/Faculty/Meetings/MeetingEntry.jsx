@@ -1,7 +1,9 @@
 import React from "react";
-import { dummyGroups } from "../../../utils/dummyData";
+import { useGroups } from "../../../hooks/useSpmsData";
 
 const MeetingEntry = () => {
+  const { data: groups } = useGroups();
+
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white">Meeting Entry</h2>
@@ -13,7 +15,7 @@ const MeetingEntry = () => {
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Select Group</label>
               <select className="w-full p-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-indigo-500">
-                {dummyGroups.map(g => (
+                {groups.map((g) => (
                   <option key={g.id} value={g.id}>{g.project} ({g.id})</option>
                 ))}
               </select>

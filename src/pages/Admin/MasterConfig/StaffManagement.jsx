@@ -1,8 +1,10 @@
 import React from "react";
-import { dummyStaff } from "../../../utils/dummyData";
-import { FiEdit, FiTrash2, FiPlus, FiUserPlus } from "react-icons/fi";
+import { FiEdit, FiTrash2, FiUserPlus } from "react-icons/fi";
+import { useStaff } from "../../../hooks/useSpmsData";
 
 const StaffManagement = () => {
+  const { data: staffMembers, isLoading, error } = useStaff();
+
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
@@ -24,7 +26,17 @@ const StaffManagement = () => {
             </tr>
           </thead>
           <tbody className="text-gray-700 dark:text-gray-300">
-            {dummyStaff.map((staff) => (
+            {isLoading && (
+              <tr>
+                <td colSpan="5" className="p-4 text-center">Loading staff...</td>
+              </tr>
+            )}
+            {!isLoading && error && (
+              <tr>
+                <td colSpan="5" className="p-4 text-center text-red-600">Failed to load staff.</td>
+              </tr>
+            )}
+            {!isLoading && !error && staffMembers.map((staff) => (
               <tr key={staff.id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50 border-b dark:border-gray-700 last:border-none">
                 <td className="p-4 font-semibold text-gray-800 dark:text-gray-200">{staff.name}</td>
                 <td className="p-4">
@@ -46,6 +58,11 @@ const StaffManagement = () => {
                 </td>
               </tr>
             ))}
+            {!isLoading && !error && staffMembers.length === 0 && (
+              <tr>
+                <td colSpan="5" className="p-4 text-center">No staff records found.</td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

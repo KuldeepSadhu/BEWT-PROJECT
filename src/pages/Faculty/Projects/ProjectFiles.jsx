@@ -1,8 +1,10 @@
 import React from "react";
-import { dummySubmissions } from "../../../utils/dummyData";
 import { FiFile, FiDownload, FiTrash2 } from "react-icons/fi";
+import { useSubmissions } from "../../../hooks/useSpmsData";
 
 const ProjectFiles = () => {
+  const { data: submissions, isLoading, error } = useSubmissions();
+
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white">Project Files</h2>
@@ -19,7 +21,17 @@ const ProjectFiles = () => {
             </tr>
           </thead>
           <tbody className="text-gray-700 dark:text-gray-300">
-            {dummySubmissions.map((file) => (
+            {isLoading && (
+              <tr>
+                <td colSpan="5" className="p-4 text-center">Loading files...</td>
+              </tr>
+            )}
+            {!isLoading && error && (
+              <tr>
+                <td colSpan="5" className="p-4 text-center text-red-600">Failed to load files.</td>
+              </tr>
+            )}
+            {!isLoading && !error && submissions.map((file) => (
               <tr key={file.id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50 border-b dark:border-gray-700 last:border-none">
                 <td className="p-4">
                   <div className="flex items-center gap-3">
@@ -31,7 +43,7 @@ const ProjectFiles = () => {
                 </td>
                 <td className="p-4">{file.student}</td>
                 <td className="p-4">{file.date}</td>
-                <td className="p-4 text-sm text-gray-500 dark:text-gray-400">2.5 MB</td>
+                <td className="p-4 text-sm text-gray-500 dark:text-gray-400">{file.size}</td>
                 <td className="p-4 text-center">
                   <div className="flex justify-center gap-3">
                     <button className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300" title="Download">
@@ -44,6 +56,11 @@ const ProjectFiles = () => {
                 </td>
               </tr>
             ))}
+            {!isLoading && !error && submissions.length === 0 && (
+              <tr>
+                <td colSpan="5" className="p-4 text-center">No files found.</td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

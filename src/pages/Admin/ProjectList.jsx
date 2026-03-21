@@ -12,6 +12,53 @@ const getStatusStyle = (status) => {
   }
 };
 
+const getProjectName = (project) => {
+  const candidates = [
+    project?.projectName,
+    project?.title,
+    project?.name,
+    project?.proposal?.projectName,
+    project?.proposal?.title,
+    project?.proposal?.name,
+  ];
+
+  const value = candidates.find(
+    (item) => typeof item === "string" && item.trim().length > 0,
+  );
+
+  return value?.trim() || "N/A";
+};
+
+const getStudentName = (project) => {
+  const candidates = [
+    project?.student?.name,
+    project?.studentName,
+    project?.owner?.name,
+    project?.submittedBy?.name,
+  ];
+
+  const value = candidates.find(
+    (item) => typeof item === "string" && item.trim().length > 0,
+  );
+
+  return value?.trim() || "-";
+};
+
+const getDepartment = (project) => {
+  const candidates = [
+    project?.department,
+    project?.student?.department,
+    project?.owner?.department,
+    project?.submittedBy?.department,
+  ];
+
+  const value = candidates.find(
+    (item) => typeof item === "string" && item.trim().length > 0,
+  );
+
+  return value?.trim() || "N/A";
+};
+
 const ProjectList = () => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -21,7 +68,19 @@ const ProjectList = () => {
     const fetchProjects = async () => {
       try {
         const res = await api.get("/admin/projects");
-        setProjects(res.data.projects);
+        const payload = res.data;
+
+        const projectList = Array.isArray(payload?.projects)
+          ? payload.projects
+          : Array.isArray(payload?.data?.projects)
+            ? payload.data.projects
+            : Array.isArray(payload?.data)
+              ? payload.data
+              : Array.isArray(payload)
+                ? payload
+                : [];
+
+        setProjects(projectList);
       } catch (err) {
         setError("Failed to load projects. Please try again.");
         console.error("ProjectList fetch error:", err);
@@ -29,6 +88,7 @@ const ProjectList = () => {
         setLoading(false);
       }
     };
+
     fetchProjects();
   }, []);
 
@@ -77,16 +137,16 @@ const ProjectList = () => {
               </tr>
             </thead>
             <tbody className="text-gray-700 dark:text-gray-300">
-              {projects.map((p) => (
+              {projects.map((p, index) => (
                 <tr
-                  key={p._id}
+                  key={p._id || p.id || `project-${index}`}
                   className="hover:bg-gray-50 dark:hover:bg-gray-700 border-b dark:border-gray-700 last:border-none"
                 >
-                  <td className="p-3 font-medium">{p.title}</td>
-                  <td className="p-3">{p.student?.name || "—"}</td>
-                  <td className="p-3">{p.department}</td>
-                  <td className={`p-3 ${getStatusStyle(p.status)}`}>
-                    {p.status}
+                  <td className="p-3 font-medium">{getProjectName(p)}</td>
+                  <td className="p-3">{getStudentName(p)}</td>
+                  <td className="p-3">{getDepartment(p)}</td>
+                  <td className={`p-3 ${getStatusStyle(p.status || "Pending")}`}>
+                    {p.status || "Pending"}
                   </td>
                 </tr>
               ))}

@@ -1,7 +1,9 @@
 import React from "react";
-import { dummyStudents } from "../../../utils/dummyData";
+import { useStudents } from "../../../hooks/useSpmsData";
 
 const Attendance = () => {
+  const { data: students, isLoading, error } = useStudents();
+
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white">Meeting Attendance</h2>
@@ -22,7 +24,17 @@ const Attendance = () => {
             </tr>
           </thead>
           <tbody className="text-gray-700 dark:text-gray-300">
-            {dummyStudents.slice(0, 3).map((student) => (
+            {isLoading && (
+              <tr>
+                <td colSpan="4" className="p-4 text-center">Loading students...</td>
+              </tr>
+            )}
+            {!isLoading && error && (
+              <tr>
+                <td colSpan="4" className="p-4 text-center text-red-600">Failed to load students.</td>
+              </tr>
+            )}
+            {!isLoading && !error && students.slice(0, 3).map((student) => (
               <tr key={student.id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50 border-b dark:border-gray-700 last:border-none">
                 <td className="p-4 font-mono">{student.rollNo}</td>
                 <td className="p-4 font-medium">{student.name}</td>
@@ -44,6 +56,11 @@ const Attendance = () => {
                 </td>
               </tr>
             ))}
+            {!isLoading && !error && students.length === 0 && (
+              <tr>
+                <td colSpan="4" className="p-4 text-center">No students found.</td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

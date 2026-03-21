@@ -1,8 +1,8 @@
 import React from "react";
-import { dummyMeetings } from "../../../utils/dummyData";
+import { useMeetings } from "../../../hooks/useSpmsData";
 
 const MeetingAttendance = () => {
-  // Mocking attendance data based on meetings
+  const { data: meetings, isLoading, error } = useMeetings();
 
   return (
     <div className="p-6">
@@ -25,7 +25,17 @@ const MeetingAttendance = () => {
             </tr>
           </thead>
           <tbody className="text-gray-700 dark:text-gray-300">
-            {dummyMeetings.map((meeting, index) => (
+            {isLoading && (
+              <tr>
+                <td colSpan="4" className="p-4 text-center">Loading attendance...</td>
+              </tr>
+            )}
+            {!isLoading && error && (
+              <tr>
+                <td colSpan="4" className="p-4 text-center text-red-600">Failed to load attendance.</td>
+              </tr>
+            )}
+            {!isLoading && !error && meetings.map((meeting) => (
               <tr
                 key={meeting.id}
                 className="hover:bg-gray-50 dark:hover:bg-gray-700/50 border-b dark:border-gray-700 last:border-none"
@@ -35,19 +45,24 @@ const MeetingAttendance = () => {
                 <td className="p-4 text-center">
                   <span
                     className={`px-2 py-1 rounded text-xs font-bold ${
-                      index % 3 === 0
+                      meeting.attendanceStatus === "Absent"
                         ? "bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300"
                         : "bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300"
                     }`}
                   >
-                    {index % 3 === 0 ? "Absent" : "Present"}
+                    {meeting.attendanceStatus}
                   </span>
                 </td>
                 <td className="p-4 text-sm text-gray-500 dark:text-gray-400">
-                  {index % 3 === 0 ? "Medical Leave" : "-"}
+                  {meeting.remarks}
                 </td>
               </tr>
             ))}
+            {!isLoading && !error && meetings.length === 0 && (
+              <tr>
+                <td colSpan="4" className="p-4 text-center">No meetings found.</td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

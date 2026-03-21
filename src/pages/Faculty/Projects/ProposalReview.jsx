@@ -1,17 +1,19 @@
 import React from "react";
-import { dummySubmissions } from "../../../utils/dummyData";
 import { FiCheckCircle, FiXCircle, FiDownload } from "react-icons/fi";
+import { useSubmissions } from "../../../hooks/useSpmsData";
 
 const ProposalReview = () => {
-  // Filter for proposal submissions
-  const proposals = dummySubmissions.filter(s => s.title.includes("Proposal"));
+  const { data: submissions, isLoading, error } = useSubmissions();
+  const proposals = submissions.filter((submission) => submission.title.includes("Proposal"));
 
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white">Proposal Review</h2>
       
       <div className="space-y-6">
-        {proposals.map((proposal) => (
+        {isLoading && <div>Loading proposals...</div>}
+        {!isLoading && error && <div className="text-red-600">Failed to load proposals.</div>}
+        {!isLoading && !error && proposals.map((proposal) => (
           <div key={proposal.id} className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-200 dark:border-gray-700">
             <div className="flex justify-between items-start mb-4">
               <div>
@@ -61,6 +63,7 @@ const ProposalReview = () => {
             </div>
           </div>
         ))}
+        {!isLoading && !error && proposals.length === 0 && <div>No proposals found.</div>}
       </div>
     </div>
   );

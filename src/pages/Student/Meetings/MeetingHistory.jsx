@@ -1,8 +1,10 @@
 import React from "react";
-import { dummyMeetings } from "../../../utils/dummyData.js";
 import { FiCalendar, FiClock } from "react-icons/fi";
+import { useMeetings } from "../../../hooks/useSpmsData";
 
 const MeetingHistory = () => {
+  const { data: meetings, isLoading, error } = useMeetings();
+
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white">
@@ -25,7 +27,17 @@ const MeetingHistory = () => {
             </tr>
           </thead>
           <tbody className="text-gray-700 dark:text-gray-300">
-            {dummyMeetings.map((meeting) => (
+            {isLoading && (
+              <tr>
+                <td colSpan="5" className="p-4 text-center">Loading meeting history...</td>
+              </tr>
+            )}
+            {!isLoading && error && (
+              <tr>
+                <td colSpan="5" className="p-4 text-center text-red-600">Failed to load meeting history.</td>
+              </tr>
+            )}
+            {!isLoading && !error && meetings.map((meeting) => (
               <tr
                 key={meeting.id}
                 className="hover:bg-gray-50 dark:hover:bg-gray-700/50 border-b dark:border-gray-700 last:border-none"
@@ -57,6 +69,11 @@ const MeetingHistory = () => {
                 </td>
               </tr>
             ))}
+            {!isLoading && !error && meetings.length === 0 && (
+              <tr>
+                <td colSpan="5" className="p-4 text-center">No meeting history found.</td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

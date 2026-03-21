@@ -1,9 +1,26 @@
 import React from "react";
 import DashboardCard from "../../Components/DashboardCard.jsx";
-import { dummyGroups } from "../../utils/dummyData";
+import { useGroups, useMeetings, useSubmissions } from "../../hooks/useSpmsData";
 
 const StudentDashboard = () => {
-  const myGroup = dummyGroups[0];
+  const { data: groups, isLoading, error } = useGroups();
+  const { data: meetings } = useMeetings();
+  const { data: submissions } = useSubmissions();
+  const myGroup = groups[0];
+  const upcomingMeetings = meetings.filter((meeting) => meeting.status !== "Completed").length;
+  const pendingTasks = submissions.filter((submission) => submission.status !== "Approved").length;
+
+  if (isLoading) {
+    return <div className="p-6">Loading dashboard...</div>;
+  }
+
+  if (error) {
+    return <div className="p-6 text-red-600">Failed to load dashboard data.</div>;
+  }
+
+  if (!myGroup) {
+    return <div className="p-6">No group data found.</div>;
+  }
 
   return (
     <div>
@@ -12,8 +29,8 @@ const StudentDashboard = () => {
 
       <div className="mb-8 mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
         <DashboardCard title="Project Progress" value={`${myGroup.progress}%`} color="indigo" />
-        <DashboardCard title="Upcoming Meetings" value="1" color="emerald" />
-        <DashboardCard title="Pending Tasks" value="3" color="amber" />
+        <DashboardCard title="Upcoming Meetings" value={String(upcomingMeetings)} color="emerald" />
+        <DashboardCard title="Pending Tasks" value={String(pendingTasks)} color="amber" />
       </div>
 
       <div className="surface-card p-6">
@@ -29,8 +46,8 @@ const StudentDashboard = () => {
         <div className="surface-card-soft p-4">
           <h4 className="mb-2 font-bold text-slate-900">Team Members:</h4>
           <ul className="list-disc ml-5 text-sm text-slate-700">
-            {myGroup.students.map((student, index) => (
-              <li key={index}>{student}</li>
+            {myGroup.students.map((student) => (
+              <li key={student}>{student}</li>
             ))}
           </ul>
         </div>

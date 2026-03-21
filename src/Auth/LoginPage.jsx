@@ -56,19 +56,19 @@ const LoginPage = ({ role }) => {
     >
       <form onSubmit={handleSubmit} className="space-y-5">
         {error && (
-          <div className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-rose-700">
+          <div className="rounded-xl border border-rose-900/60 bg-rose-950/60 px-4 py-3 text-rose-300">
             <p className="text-sm">{error}</p>
           </div>
         )}
 
         <div>
-          <label className="mb-2 block text-sm font-medium text-slate-700">Email Address</label>
+          <label className="mb-2 block text-sm font-medium text-slate-300">Email Address</label>
           <input
             type="email"
             name="email"
             required
             disabled={loading}
-            className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder-slate-400 outline-none transition focus:border-teal-600 focus:ring-2 focus:ring-teal-100 disabled:cursor-not-allowed disabled:opacity-50"
+            className="w-full rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-slate-100 placeholder-slate-500 outline-none transition focus:border-teal-500 focus:ring-2 focus:ring-teal-900/60 disabled:cursor-not-allowed disabled:opacity-50"
             placeholder={`Enter your ${role} email`}
             value={formData.email}
             onChange={handleChange}
@@ -76,13 +76,13 @@ const LoginPage = ({ role }) => {
         </div>
 
         <div>
-          <label className="mb-2 block text-sm font-medium text-slate-700">Password</label>
+          <label className="mb-2 block text-sm font-medium text-slate-300">Password</label>
           <input
             type="password"
             name="password"
             required
             disabled={loading}
-            className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 placeholder-slate-400 outline-none transition focus:border-teal-600 focus:ring-2 focus:ring-teal-100 disabled:cursor-not-allowed disabled:opacity-50"
+            className="w-full rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-slate-100 placeholder-slate-500 outline-none transition focus:border-teal-500 focus:ring-2 focus:ring-teal-900/60 disabled:cursor-not-allowed disabled:opacity-50"
             placeholder="Enter your password"
             value={formData.password}
             onChange={handleChange}
@@ -98,14 +98,14 @@ const LoginPage = ({ role }) => {
         </button>
 
         <div className="mt-4 flex items-center justify-between gap-3">
-          <Link to="/login" className="text-sm text-slate-500 transition-colors hover:text-slate-800">
+          <Link to="/login" className="text-sm text-slate-400 transition-colors hover:text-slate-200">
             Back to role selection
           </Link>
 
           {role !== "admin" && (
-            <span className="text-sm text-slate-500">
+            <span className="text-sm text-slate-400">
               No account?{" "}
-              <Link to={`/${role}/register`} className="font-medium text-teal-700 hover:text-teal-600">
+              <Link to={`/${role}/register`} className="font-medium text-teal-400 hover:text-teal-300">
                 Register
               </Link>
             </span>

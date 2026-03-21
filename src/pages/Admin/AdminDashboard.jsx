@@ -16,8 +16,8 @@ const AdminDashboard = () => {
           api.get("/admin/stats"),
           api.get("/admin/proposals/recent"),
         ]);
-        setStats(statsRes.data.stats);
-        setProposals(proposalsRes.data.proposals);
+        setStats(statsRes.data?.stats ?? {});
+        setProposals(Array.isArray(proposalsRes.data?.proposals) ? proposalsRes.data.proposals : []);
       } catch (err) {
         setError("Failed to load dashboard data. Please try again.");
         console.error("Dashboard fetch error:", err);
@@ -39,6 +39,62 @@ const AdminDashboard = () => {
         return "bg-amber-100 text-amber-800";
     }
   };
+
+  const getProjectName = (proposal) => {
+    const candidates = [
+      proposal?.projectName,
+      proposal?.title,
+      proposal?.name,
+      proposal?.project?.projectName,
+      proposal?.project?.title,
+      proposal?.project?.name,
+      proposal?.projectId?.projectName,
+      proposal?.projectId?.title,
+      proposal?.projectId?.name,
+    ];
+
+    const value = candidates.find(
+      (item) => typeof item === "string" && item.trim().length > 0,
+    );
+
+    return value?.trim() || "N/A";
+  };
+
+  const getDepartment = (proposal) => {
+    const candidates = [
+      proposal?.faculty?.department,
+      proposal?.faculty?.dept,
+      proposal?.faculty?.profile?.department,
+      proposal?.mentor?.department,
+      proposal?.mentor?.dept,
+      proposal?.mentor?.profile?.department,
+      proposal?.guide?.department,
+      proposal?.guide?.dept,
+      proposal?.guide?.profile?.department,
+    ];
+
+    const value = candidates.find(
+      (item) => typeof item === "string" && item.trim().length > 0,
+    );
+
+    return value?.trim() || "N/A";
+  };
+
+  const normalizedProposals = proposals.map((proposal, index) => {
+    const facultyName =
+      proposal?.faculty?.name?.trim() ||
+      proposal?.mentor?.name?.trim() ||
+      proposal?.guide?.name?.trim() ||
+      "";
+
+    return {
+      id: proposal?._id || `proposal-${index}`,
+      title: getProjectName(proposal),
+      department: getDepartment(proposal),
+      facultyName,
+      status: proposal?.status || "Pending",
+    };
+  });
 
   if (loading) {
     return (
@@ -79,7 +135,7 @@ const AdminDashboard = () => {
           Recent Project Proposals
         </h3>
         <div className="mt-4 overflow-x-auto">
-          {proposals.length === 0 ? (
+          {normalizedProposals.length === 0 ? (
             <p className="py-8 text-center text-slate-500">No proposals found.</p>
           ) : (
             <table className="w-full border-collapse text-left">
@@ -92,12 +148,16 @@ const AdminDashboard = () => {
                 </tr>
               </thead>
               <tbody>
-                {proposals.map((proposal) => (
-                  <tr key={proposal._id} className="transition-colors hover:bg-slate-50">
+                {normalizedProposals.map((proposal) => (
+                  <tr key={proposal.id} className="transition-colors hover:bg-slate-50">
                     <td className="border border-slate-200 p-3 text-slate-800">{proposal.title}</td>
                     <td className="border border-slate-200 p-3 text-slate-800">{proposal.department}</td>
                     <td className="border border-slate-200 p-3 text-slate-800">
-                      {proposal.faculty?.name || "-"}
+                      {proposal.facultyName ? (
+                        proposal.facultyName
+                      ) : (
+                        <span className="font-medium text-amber-500">Not Assigned</span>
+                      )}
                     </td>
                     <td className="border border-slate-200 p-3 text-center">
                       <span className={`status-chip ${getStatusStyle(proposal.status)}`}>

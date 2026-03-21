@@ -63,13 +63,13 @@ const Login = () => {
       ref={containerRef}
       className="relative flex min-h-screen items-center justify-center px-4 py-10"
     >
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_10%_20%,rgba(245,158,11,0.2),transparent_40%),radial-gradient(circle_at_80%_0%,rgba(13,148,136,0.2),transparent_45%)]" />
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_10%_20%,rgba(75,98,133,0.3),transparent_44%),radial-gradient(circle_at_80%_0%,rgba(107,127,157,0.26),transparent_45%)]" />
 
-      <div className="role-card w-full max-w-xl rounded-3xl border border-slate-200 bg-white/95 p-8 shadow-2xl backdrop-blur md:p-10">
-        <h1 className="role-title text-center text-3xl font-bold text-slate-900 md:text-4xl">
+      <div className="role-card w-full max-w-xl rounded-3xl border border-slate-700/70 bg-slate-900/85 p-8 shadow-2xl backdrop-blur md:p-10">
+        <h1 className="role-title text-center text-3xl font-bold text-slate-100 md:text-4xl">
           Student Project Management System
         </h1>
-        <p className="mt-3 text-center text-slate-600">Choose your workspace to continue.</p>
+        <p className="mt-3 text-center text-slate-400">Choose your workspace to continue.</p>
 
         <div className="mt-8 space-y-4">
           {roleButtons.map((item) => (

@@ -1,7 +1,9 @@
 import React from "react";
-import { dummyStudents } from "../../../utils/dummyData";
+import { useStudents } from "../../../hooks/useSpmsData";
 
 const MarksReport = () => {
+  const { data: students, isLoading, error } = useStudents();
+
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white">Marks Report</h2>
@@ -20,11 +22,20 @@ const MarksReport = () => {
             </tr>
           </thead>
           <tbody className="text-gray-700 dark:text-gray-300">
-            {dummyStudents.map((student, i) => {
-              // Mock marks logic based on index
-              const mid = 20 + (i % 10);
-              const end = 35 + (i % 15);
-              const internal = 15 + (i % 5);
+            {isLoading && (
+              <tr>
+                <td colSpan="7" className="p-4 text-center">Loading marks...</td>
+              </tr>
+            )}
+            {!isLoading && error && (
+              <tr>
+                <td colSpan="7" className="p-4 text-center text-red-600">Failed to load students.</td>
+              </tr>
+            )}
+            {!isLoading && !error && students.map((student) => {
+              const mid = Number(student.marks?.mid ?? 0);
+              const end = Number(student.marks?.end ?? 0);
+              const internal = Number(student.marks?.internal ?? 0);
               const total = mid + end + internal;
               
               return (
@@ -43,6 +54,11 @@ const MarksReport = () => {
                 </tr>
               );
             })}
+            {!isLoading && !error && students.length === 0 && (
+              <tr>
+                <td colSpan="7" className="p-4 text-center">No student marks found.</td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

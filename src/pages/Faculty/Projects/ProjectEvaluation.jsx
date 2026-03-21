@@ -1,8 +1,21 @@
 import React from "react";
-import { dummyGroups } from "../../../utils/dummyData";
+import { useGroups } from "../../../hooks/useSpmsData";
 
 const ProjectEvaluation = () => {
-  const group = dummyGroups[0]; // Focusing on one group for demo
+  const { data: groups, isLoading, error } = useGroups();
+  const group = groups[0];
+
+  if (isLoading) {
+    return <div className="p-6">Loading evaluation data...</div>;
+  }
+
+  if (error) {
+    return <div className="p-6 text-red-600">Failed to load evaluation data.</div>;
+  }
+
+  if (!group) {
+    return <div className="p-6">No group available for evaluation.</div>;
+  }
 
   return (
     <div className="p-6">
