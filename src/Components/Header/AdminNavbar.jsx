@@ -122,7 +122,7 @@ const AdminNavbar = () => {
                         }`
                       }
                       onClick={() => {
-                        // Close sidebar on mobile after navigation
+                        // Close sidebar on mobile only
                         if (window.innerWidth < 1024) {
                           setSidebarOpen(false);
                         }

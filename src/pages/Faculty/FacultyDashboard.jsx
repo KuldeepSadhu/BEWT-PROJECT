@@ -1,8 +1,10 @@
 import React, { useMemo } from "react";
 import DashboardCard from "../../Components/DashboardCard.jsx";
 import { useGroups, useMeetings, useSubmissions } from "../../hooks/useSpmsData";
+import { getCurrentUser } from "../../utils/auth";
 
 const FacultyDashboard = () => {
+  const currentUser = getCurrentUser();
   const { data: groups, isLoading: groupsLoading, error: groupsError } = useGroups();
   const { data: meetings, isLoading: meetingsLoading, error: meetingsError } = useMeetings();
   const { data: submissions, isLoading: submissionsLoading, error: submissionsError } = useSubmissions();
@@ -23,7 +25,7 @@ const FacultyDashboard = () => {
 
   return (
     <div>
-      <h2 className="page-title">Faculty Dashboard</h2>
+      <h2 className="page-title">Welcome, {currentUser?.name || "Faculty"}</h2>
       <p className="page-subtitle">Monitor your groups, meetings, and evaluation pipeline.</p>
 
       <div className="mb-8 mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">

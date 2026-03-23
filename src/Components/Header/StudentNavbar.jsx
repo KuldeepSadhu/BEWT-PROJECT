@@ -12,12 +12,14 @@ import {
   FiFileText,
   FiDownload,
 } from "react-icons/fi";
-import { logout } from "../../utils/auth";
+import { logout, getCurrentUser } from "../../utils/auth";
 
 const StudentNavbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const currentUser = getCurrentUser();
+  const displayName = currentUser?.name || "Student";
 
   const handleLogout = () => {
     logout();
@@ -54,26 +56,20 @@ const StudentNavbar = () => {
 
   const isActive = (path) => {
     if (location.pathname === path) return true;
-    // Check if current path starts with the menu path (for sub-routes)
-    if (path !== "/student/dashboard" && location.pathname.startsWith(path))
-      return true;
+    if (path !== "/student/dashboard" && location.pathname.startsWith(path)) return true;
     return false;
   };
 
   return (
     <nav className="bg-white/85 backdrop-blur border-b border-slate-200 shadow-sm sticky top-0 z-30">
       <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <div className="flex items-center gap-3">
+        <div className="flex justify-between items-center h-16 gap-3">
+          <div className="flex items-center gap-3 min-w-fit">
             <h1 className="text-xl font-bold text-slate-900">SPMS</h1>
-            <span className="text-slate-500 text-sm hidden sm:inline">
-              Student Workspace
-            </span>
+            <span className="text-slate-500 text-sm hidden sm:inline">Student Workspace</span>
           </div>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-1.5">
+          <div className="hidden md:flex items-center gap-1.5 overflow-x-auto max-w-[56vw] px-1">
             {menuItems.map((item) => {
               const Icon = item.icon;
               return (
@@ -81,7 +77,7 @@ const StudentNavbar = () => {
                   key={item.path}
                   to={item.path}
                   className={({ isActive: navIsActive }) =>
-                    `flex items-center gap-2 px-3 py-2 rounded-xl transition-all text-sm visited:text-inherit [&_span]:text-current [&_svg]:text-current ${
+                    `whitespace-nowrap flex items-center gap-2 px-3 py-2 rounded-xl transition-all text-sm visited:text-inherit [&_span]:text-current [&_svg]:text-current ${
                       navIsActive || isActive(item.path)
                         ? "bg-teal-700 !text-white shadow-sm"
                         : "!text-slate-700 hover:bg-slate-100 hover:!text-slate-900"
@@ -95,8 +91,12 @@ const StudentNavbar = () => {
             })}
           </div>
 
-          {/* Right Side Actions */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3 min-w-fit">
+            <div className="hidden lg:flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-slate-800">
+              <FiUser size={14} />
+              <span className="text-sm font-semibold truncate max-w-[140px]">{displayName}</span>
+            </div>
+
             <button
               onClick={handleLogout}
               className="flex items-center gap-2 px-3 py-2 bg-amber-400 hover:bg-amber-300 rounded-xl transition-colors text-slate-900 font-semibold"
@@ -105,7 +105,6 @@ const StudentNavbar = () => {
               <span className="hidden sm:inline">Logout</span>
             </button>
 
-            {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="md:hidden p-2 hover:bg-slate-100 rounded-lg text-slate-700"
@@ -115,9 +114,16 @@ const StudentNavbar = () => {
           </div>
         </div>
 
-        {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className="md:hidden py-4 border-t border-slate-200">
+            <div className="mb-3 flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-800">
+              <FiUser size={16} />
+              <div>
+                <p className="text-sm font-semibold">{displayName}</p>
+                <p className="text-xs text-slate-500">student</p>
+              </div>
+            </div>
+
             <div className="flex flex-col gap-2">
               {menuItems.map((item) => {
                 const Icon = item.icon;

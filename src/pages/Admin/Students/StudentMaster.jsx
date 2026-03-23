@@ -31,6 +31,7 @@ const StudentMaster = () => {
   const [showAddModal, setShowAddModal] = useState(false);
   const [formData, setFormData] = useState(INITIAL_FORM);
   const [submitting, setSubmitting] = useState(false);
+  const [deletingId, setDeletingId] = useState("");
   const [formError, setFormError] = useState("");
   const [formSuccess, setFormSuccess] = useState("");
 
@@ -100,6 +101,34 @@ const StudentMaster = () => {
     }
   };
 
+  const handleDeleteStudent = async (student) => {
+    if (!student?.id || deletingId) {
+      return;
+    }
+
+    const isConfirmed = window.confirm(
+      `Are you sure you want to delete ${student.name}? This action cannot be undone.`,
+    );
+
+    if (!isConfirmed) {
+      return;
+    }
+
+    setFormError("");
+    setFormSuccess("");
+    setDeletingId(student.id);
+
+    try {
+      const response = await api.delete(`/admin/students/${student.id}`);
+      setStudentRows((prev) => prev.filter((item) => item.id !== student.id));
+      setFormSuccess(response.data?.message || "Student deleted successfully.");
+    } catch (requestError) {
+      setFormError(requestError.response?.data?.message || "Failed to delete student.");
+    } finally {
+      setDeletingId("");
+    }
+  };
+
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
@@ -116,6 +145,12 @@ const StudentMaster = () => {
       {formSuccess && (
         <div className="mb-4 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-green-700">
           {formSuccess}
+        </div>
+      )}
+
+      {formError && !showAddModal && (
+        <div className="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700">
+          {formError}
         </div>
       )}
 
@@ -167,7 +202,13 @@ const StudentMaster = () => {
                     <button className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300">
                       <FiEdit size={18} />
                     </button>
-                    <button className="text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300">
+                    <button
+                      type="button"
+                      onClick={() => handleDeleteStudent(student)}
+                      disabled={deletingId === student.id}
+                      title="Delete student"
+                      className="text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300 disabled:cursor-not-allowed disabled:opacity-50"
+                    >
                       <FiTrash2 size={18} />
                     </button>
                   </div>
@@ -193,7 +234,7 @@ const StudentMaster = () => {
                 onClick={closeAddModal}
                 className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
               >
-                ✕
+                X
               </button>
             </div>
 
@@ -227,7 +268,7 @@ const StudentMaster = () => {
                   />
                 </div>
               </div>
-
+              
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Password *</label>

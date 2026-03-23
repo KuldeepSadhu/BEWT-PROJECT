@@ -71,6 +71,32 @@ const toPersonName = (person, fallback) => {
   return toDisplayValue(person?.name || fullName, fallback);
 };
 
+const toGroupMembers = (group) => {
+  const source = Array.isArray(group?.students)
+    ? group.students
+    : Array.isArray(group?.members)
+      ? group.members
+      : [];
+
+  return source.map((student) => {
+    if (typeof student === "string") {
+      return {
+        id: "",
+        name: toDisplayValue(student, "Unknown Student"),
+        email: "",
+        rollNo: "",
+      };
+    }
+
+    return {
+      id: student?._id || student?.id || "",
+      name: toPersonName(student, "Unknown Student"),
+      email: student?.email || "",
+      rollNo: student?.rollNo || student?.rollNumber || student?.enrollmentNo || "",
+    };
+  });
+};
+
 const normalizeStudent = (student) => ({
   id: student?._id || student?.id || "",
   name: toPersonName(student, "Unnamed Student"),
@@ -82,35 +108,36 @@ const normalizeStudent = (student) => ({
   marks: student?.marks || {},
 });
 
-const normalizeGroup = (group) => ({
-  id: group?._id || group?.id || "",
-  groupID: group?.groupID || group?.code || "N/A",
-  project:
-    group?.project?.title ||
-    group?.project ||
-    group?.projectTitle ||
-    group?.title ||
-    "Untitled Project",
-  students: Array.isArray(group?.students)
-    ? group.students.map((student) => toPersonName(student, "Unknown Student"))
-    : Array.isArray(group?.members)
-      ? group.members.map((student) => toPersonName(student, "Unknown Student"))
-      : [],
-  guide: toPersonName(
-    group?.guide || group?.faculty || group?.mentor,
-    group?.guideName || "Guide not assigned",
-  ),
-  status: group?.status || "Pending",
-  progress: Number(group?.progress || group?.completionPercentage || 0),
-  abstract: group?.abstract || group?.project?.description || "",
-  domain: group?.domain || group?.project?.department || "N/A",
-  technologies: Array.isArray(group?.technologies)
-    ? group.technologies
-    : Array.isArray(group?.project?.technologies)
-      ? group.project.technologies
-      : [],
-  remarks: group?.remarks || group?.project?.remarks || "-",
-});
+const normalizeGroup = (group) => {
+  const members = toGroupMembers(group);
+
+  return {
+    id: group?._id || group?.id || "",
+    groupID: group?.groupID || group?.code || "N/A",
+    project:
+      group?.project?.title ||
+      group?.project ||
+      group?.projectTitle ||
+      group?.title ||
+      "Untitled Project",
+    students: members.map((student) => student.name),
+    memberDetails: members,
+    guide: toPersonName(
+      group?.guide || group?.faculty || group?.mentor,
+      group?.guideName || "Guide not assigned",
+    ),
+    status: group?.status || "Pending",
+    progress: Number(group?.progress || group?.completionPercentage || 0),
+    abstract: group?.abstract || group?.project?.description || "",
+    domain: group?.domain || group?.project?.department || "N/A",
+    technologies: Array.isArray(group?.technologies)
+      ? group.technologies
+      : Array.isArray(group?.project?.technologies)
+        ? group.project.technologies
+        : [],
+    remarks: group?.remarks || group?.project?.remarks || "-",
+  };
+};
 
 const normalizeProjectType = (projectType) => ({
   id: projectType?._id || projectType?.id || "",
@@ -132,7 +159,7 @@ const normalizeAcademicYear = (academicYear) => ({
 const normalizeStaff = (staff) => ({
   id: staff?._id || staff?.id || "",
   name: toPersonName(staff, "Unnamed Staff"),
-  role: staff?.role || staff?.designation || "N/A",
+  role: staff?.designation || staff?.role || "N/A",
   email: staff?.email || staff?.user?.email || "N/A",
   department: staff?.department || "N/A",
   lastLogin: formatDate(staff?.lastLogin || staff?.lastSeen, "Never"),
